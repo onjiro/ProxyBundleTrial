@@ -1,0 +1,5 @@
+onjiro_memcache_proxy:
+    resource: "@OnjiroMemcacheProxyBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
