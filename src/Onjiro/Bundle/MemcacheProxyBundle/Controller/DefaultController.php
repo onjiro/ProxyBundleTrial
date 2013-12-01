@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Zend\Code\Generator\ClassGenerator;
 
 class DefaultController extends Controller
 {
@@ -15,6 +16,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return new JsonResponse();
+        $class = new ClassGenerator();
+        $class->setName('GenerateExample');
+        $code = $class->generate();
+        
+        return new JsonResponse(["generated class" => $code]);
     }
 }
