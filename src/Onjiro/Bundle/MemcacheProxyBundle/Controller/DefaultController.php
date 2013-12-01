@@ -18,29 +18,9 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $method = new MethodGenerator(
-            $name = 'method',
-            $parameters = [
-                new ParameterGenerator('parameters', 'array', [])
-            ],
-            $flags = MethodGenerator::FLAG_PUBLIC,
-            $body = "echo 'Generated method called!!';",
-            null
-        );
-
-        $class = new ClassGenerator();
-        $class->setName('GenerateExample');
-        $class->addMethods([
-            $method,
-        ]);
-        $code = $class->generate();
-
-        echo $code."\n\n";
-
-        eval($code);
         $generatedClass = new \GenerateExample();
         echo $generatedClass->method()."\n\n";
         
-        return new JsonResponse(["generated class" => $code]);
+        return new JsonResponse();
     }
 }
