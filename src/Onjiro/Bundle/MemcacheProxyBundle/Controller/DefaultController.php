@@ -16,7 +16,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $generatedClass = new GenerateExample();
+        $generatedClass = $this->get('memcache_proxy.example');
         echo $generatedClass->method()."\n\n";
         
         return new JsonResponse();
