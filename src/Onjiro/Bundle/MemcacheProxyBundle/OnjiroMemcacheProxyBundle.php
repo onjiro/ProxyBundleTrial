@@ -11,9 +11,9 @@ class OnjiroMemcacheProxyBundle extends Bundle
     public function boot()
     {
         // auto load setting
-        $file = $this->container->getParameter('kernel.cache_dir').'/GenerateExample.php';
-        spl_autoload_register(function($className) use($file) {
-            if ($className === 'GenerateExample') {
+        $file = $this->container->getParameter('kernel.cache_dir').'/Proxy/GenerateExample.php';
+        spl_autoload_register(function($className) use ($file) {
+            if ($className === 'Proxy\GenerateExample') {
                 require $file;
             }
         });

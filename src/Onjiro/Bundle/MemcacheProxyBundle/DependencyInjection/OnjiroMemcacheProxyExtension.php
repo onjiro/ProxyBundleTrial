@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\Loader;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\MethodGenerator;
 use Zend\Code\Generator\ParameterGenerator;
+use Zend\Code\Generator\FileGenerator;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 
 /**
@@ -45,10 +46,19 @@ class OnjiroMemcacheProxyExtension extends Extension
         $class->addMethods([
             $method,
         ]);
-        $code = $class->generate();
+        $file = new FileGenerator();
+        $file->setClass($class);
+        $file->setNameSpace("Proxy");
+        $code = $file->generate();
 
         // output to cache folder
-        $file = $container->getParameter('kernel.cache_dir').'/GenerateExample.php';
-        file_put_contents($file, "<?php\n".$code);
+        $filepath = $container->getParameter('kernel.cache_dir').'/Proxy/GenerateExample.php';
+        $fileDir = dirname($filepath);
+        if (file_exists($fileDir) && !is_dir($fileDir)) {
+            throw new \Exception("Fail to make directory '${fileDir}'");
+        } else if (!file_exists($fileDir)) {
+            mkdir($fileDir, 0777, true);
+        }
+        file_put_contents($filepath, $code);
     }
 }
